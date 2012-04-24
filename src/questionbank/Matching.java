@@ -169,7 +169,7 @@ public class Matching extends Question{
 			
 			pos = checkPos(word[i]);			
 			
-			if( (i == word.length - 1) && (pos.equals("v")) )
+			if( (i == word.length - 1) && (pos.equals("v")) )  //prevent overflow for the verb in the end
 					break;
 			
 			if ( pos.equals("v") ){                                             
@@ -177,22 +177,41 @@ public class Matching extends Question{
 				
 				if( pos.equals("prep") ){            //check v + prep + noun or null(the) ( v + null + n or null  ) e.g agree on something                                  
 					
-					pos = checkPos(word[i + 2]); 
+					if( i + 2 < word.length - 1){           ////prevent overflow for the verb in the end
+						
+						pos = checkPos(word[i + 2]); 
 					
-					if( pos.equals("n") || pos.equals("prep") )  
-						breakPoint = i + 2;                
+						if( pos.equals("n") || pos.equals("prep") )  
+							breakPoint = i + 2;
+						
+					}else{
+						breakPoint = i + 1;        //if the programme reach this, sentence probably broke not well
+					}
 						
 				//End case
 				}else if(pos.equals("r") ){           //check v + adverb + prep + noun or null(the)   (v + r + null + null or n ) e.g. alter drastically with something
 					
-					pos = checkPos(word[i + 2]);     
+					if( i + 2 < word.length - 1){           ////prevent overflow for the verb in the end
+						
+						pos = checkPos(word[i + 2]);     
 					
-					if( pos.equals("prep") )          
+						if( pos.equals("prep") )          
 						
-						pos = checkPos(word[i + 3]);    
+							if( i + 3 < word.length - 1){           ////prevent overflow for the verb in the end
+								
+								pos = checkPos(word[i + 3]);    
 						
-						if( pos.equals("n") || pos.equals("prep")  )  
-							breakPoint = i + 3;
+								if( pos.equals("n") || pos.equals("prep")  )  
+									breakPoint = i + 3;
+							
+							}else{
+								breakPoint = i + 1;        //if the programme reach this, sentence probably broke not well
+							}
+								
+							
+					}else{
+						breakPoint = i + 1;        //if the programme reach this, sentence probably broke not well
+					}
 						
 				//End case
 					if( pos.equals("n") )   
@@ -210,9 +229,9 @@ public class Matching extends Question{
 		
 		}
 		
+		if(breakPoint > word.length) // prevent overflow, probably no need to run if the above is correct
+			breakPoint = 0;
 		
-		
-	
 		String sentence1 = "" ;
 		
 		String sentence2 = "";
