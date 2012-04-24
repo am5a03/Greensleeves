@@ -177,7 +177,7 @@ public class Matching extends Question{
 				
 				if( pos.equals("prep") ){            //check v + prep + noun or null(the) ( v + null + n or null  ) e.g agree on something                                  
 					
-					if( i + 2 < word.length - 1){           ////prevent overflow for the verb in the end
+					if( i + 2 < word.length){           ////prevent overflow for the verb in the end
 						
 						pos = checkPos(word[i + 2]); 
 					
@@ -191,13 +191,13 @@ public class Matching extends Question{
 				//End case
 				}else if(pos.equals("r") ){           //check v + adverb + prep + noun or null(the)   (v + r + null + null or n ) e.g. alter drastically with something
 					
-					if( i + 2 < word.length - 1){           ////prevent overflow for the verb in the end
+					if( i + 2 < word.length){           ////prevent overflow for the verb in the end
 						
 						pos = checkPos(word[i + 2]);     
 					
 						if( pos.equals("prep") )          
 						
-							if( i + 3 < word.length - 1){           ////prevent overflow for the verb in the end
+							if( i + 3 < word.length){           ////prevent overflow for the verb in the end
 								
 								pos = checkPos(word[i + 3]);    
 						
@@ -229,7 +229,7 @@ public class Matching extends Question{
 		
 		}
 		
-		if(breakPoint > word.length) // prevent overflow, probably no need to run if the above is correct
+		if(breakPoint >= word.length) // prevent overflow, probably no need to run if the above is correct
 			breakPoint = 0;
 		
 		String sentence1 = "" ;
