@@ -103,7 +103,7 @@ public class Matching extends Question{
 						
 		try {
 			Paraphraser p = new Paraphraser(input);
-			p.setChanges(false, true, true, false, 0.7);
+			p.setChanges(false, false, true, false, 0.5);
 			input = p.paraphrase();	
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

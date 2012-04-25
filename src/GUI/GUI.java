@@ -112,6 +112,7 @@ public class GUI extends JPanel  {
         
         
         JTextArea textarea1 = new JTextArea("");
+        textarea1.setLineWrap(true);
         JScrollPane scrollPane1 = new JScrollPane(textarea1);
         
         filler.setHorizontalAlignment(JLabel.CENTER);
@@ -269,7 +270,7 @@ public class GUI extends JPanel  {
     private static void createAndShowGUI() {
         //Create and set up the window.
         JFrame frame = new JFrame("GreenSleeves");
-        frame.setSize(600, 400);
+        frame.setSize(800, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JLabel label = new JLabel("Greensleeves");
          

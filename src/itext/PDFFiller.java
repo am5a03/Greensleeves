@@ -270,7 +270,7 @@ public class PDFFiller {
 				fillQuestionHeading(i/2, QuestionType.cloze, this.questinCount, this.questinCount + scs.getQuestionAnsPair().size() - 1);
 				//System.out.println("****SCS DEBUG: " + scs.getQuestionAnsPair());
 				//System.out.println("****SCS DEBUG: " + scs.getQuestionAnsPair().size());
-				//fillCloze(scs.getQuestionAnsPair().size(), scs.getQuestionAnsPair(), this.questinCount);
+				fillCloze(scs.getQuestionAnsPair().size(), scs.getQuestionAnsPair(), this.questinCount);
 				
 			}
 		}
