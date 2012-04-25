@@ -93,9 +93,10 @@ public class ExamGenerator implements Runnable{
 			int numOfParas = essays[i].getNumOfParas();
 			int quota = this.questionQuota[i];
 			int min = Math.min(numOfParas, quota);
-			for(int j = 0; j<min; j++){
-				getSummaryCloze(essays[j], (new Random()).nextInt(essays[j].getParagraphs().size()));
-			}
+			//for(int j = 0; j<min; j++){
+			//	getSummaryCloze(essays[j], (new Random()).nextInt(essays[j].getParagraphs().size()));
+			//}
+			getSummaryCloze(essays[i], min);
 		}
 		
 		if(qt.get(1) == QuestionType.ParagraphHeading){
@@ -128,9 +129,13 @@ public class ExamGenerator implements Runnable{
 			int numOfParas = essays[i].getNumOfParas();
 			int quota = this.questionQuota[i];
 			int min = Math.min(numOfParas, quota);
-			for(int j = 0; j<min; j++){
-				getSummaryCloze(essays[j], (new Random()).nextInt(essays[j].getParagraphs().size()));
-			}
+
+			//for(int j = 0; j<min; j++){
+			//	getSummaryCloze(essays[j], (new Random()).nextInt(essays[j].getParagraphs().size()));
+			//}
+			getSummaryCloze(essays[i], min);
+
+
 		}
 	}
 	
@@ -199,9 +204,9 @@ public class ExamGenerator implements Runnable{
 	}
 	
 	private synchronized void getSummaryCloze(Essay e, Integer para){
-		SummaryCloze summaryCloze = new SummaryCloze(e, para);
-		summaryCloze.questionGen();
-		questionList.add(summaryCloze);
+		SummaryClozes summaryClozes = new SummaryClozes(e, para);
+		summaryClozes.questionGen();
+		questionList.add(summaryClozes);
 	}
 	
 	/**

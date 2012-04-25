@@ -18,6 +18,7 @@ public class SummaryCloze extends Question {
 	
 	Pair<String, String> questionAnsPair;
 	
+	
 
 	public SummaryCloze(Essay e, Integer targetPara) {
 		// TODO Auto-generated constructor stub
@@ -25,6 +26,7 @@ public class SummaryCloze extends Question {
 		//this.type = type;
 		//this.qnNum = qnNum;
 		this.targetPara = targetPara;
+		this.questionType = Question.QuestionType.cloze;
 		
 	}
 
@@ -83,6 +85,10 @@ public class SummaryCloze extends Question {
 			System.out.println(answer);
 		}catch(Exception e){e.printStackTrace();}
 		
+	}
+	
+	public Pair<String, String> getQuestionAnsPair(){
+		return questionAnsPair;
 	}
 
 }
