@@ -15,7 +15,9 @@ import questionbank.SevenTypes;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.LayoutManager2;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -28,16 +30,19 @@ import java.util.ArrayList;
  
 public class GUI extends JPanel  {
 	public static ArrayList<ArrayList<QuestionType>> qts = new ArrayList<ArrayList<QuestionType>>();
+	public static String outputPath = "IELTS";
 	
     public GUI() {  	
     	
         super(new GridLayout(1, 1));
          
         JTabbedPane tabbedPane = new JTabbedPane();
-         
+        
+        JComponent front = makeFrontPage();
         JComponent panel1 = makeTextPanel1("Passage 1");
         JComponent panel4 = makeTextPanel1("Passage 2");
         JComponent panel5 = makeTextPanel1("Passage 3");
+        tabbedPane.addTab("Main", null, front, "Main");
         tabbedPane.addTab("Passage 1",null, panel1,
                 "Passage 1");
         tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
@@ -80,6 +85,41 @@ public class GUI extends JPanel  {
         JPanel panel = new FileChooser();
         return panel;
     }
+    
+    protected JComponent makeFrontPage(){
+    	JPanel wrapper = new JPanel();
+    	JPanel panel = new JPanel();
+    	final JTextField fileDir = new JTextField("IELTS", 40);
+    	JLabel instruction = new JLabel("Enter the output directory or file name:");
+    	JButton saveBtn = new JButton("Save");
+    	
+    	panel.setLayout(new FlowLayout(FlowLayout.LEADING));
+    	
+    	
+    	panel.add(instruction);
+    	panel.add(fileDir);
+    	panel.add(saveBtn);
+    	
+    	wrapper.setLayout(new BorderLayout());
+    	wrapper.add(panel, BorderLayout.NORTH);
+    	
+    	saveBtn.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				GUI.outputPath = fileDir.getText();
+				JOptionPane.showMessageDialog(null,
+					    "The output directory or file name is set to " + fileDir.getText(),
+					    "Inane warning",
+					    JOptionPane.INFORMATION_MESSAGE);
+			}
+    		
+    	});
+    	
+    	return wrapper;
+    }
+    
     protected JComponent makeTextPanel1(final String text) {
         final JPanel panel = new JPanel(false);
         JPanel passage = new JPanel();
@@ -113,6 +153,7 @@ public class GUI extends JPanel  {
         
         
         JTextArea textarea1 = new JTextArea("");
+        
         textarea1.setLineWrap(true);
         JScrollPane scrollPane1 = new JScrollPane(textarea1);
         
@@ -128,7 +169,8 @@ public class GUI extends JPanel  {
         qtype.add(qtype_cloze);
         qtype.add(qtype_matching);
         panel.setLayout (new BorderLayout());
-        panel.add(filler,BorderLayout.NORTH);
+        panel.add(filler, BorderLayout.NORTH);       
+        
         
         panel.add(passage,BorderLayout.CENTER);
         panel.add(qtype,BorderLayout.EAST);

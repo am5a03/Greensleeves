@@ -128,7 +128,6 @@ public class ExamGenerator implements Runnable{
 			int min = Math.min(numOfParas, quota);
 			
 			genMatching(essays[i], min);
-			this.questionQuota[i] -= min;
 		}else if(qt.get(1) == QuestionType.cloze){
 			int numOfParas = essays[i].getNumOfParas();
 			int quota = this.questionQuota[i];
@@ -138,7 +137,6 @@ public class ExamGenerator implements Runnable{
 			//	getSummaryCloze(essays[j], (new Random()).nextInt(essays[j].getParagraphs().size()));
 			//}
 			getSummaryCloze(essays[i], min);
-			this.questionQuota[i] -= min;
 		}
 	}
 	
