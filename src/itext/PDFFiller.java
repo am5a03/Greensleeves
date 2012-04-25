@@ -255,6 +255,8 @@ public class PDFFiller {
 				
 			}else if(q instanceof Matching){
 				Matching matching = (Matching)q;
+				
+				fillQuestionHeading(i/2, QuestionType.Matching, this.questinCount, this.questinCount + matching.getQuestionAnsPair().getRight().size() - 1);
 			}else if(q instanceof SevenTypes){
 				
 			}
@@ -468,7 +470,7 @@ public class PDFFiller {
 				
 				instructions[1].add(new Phrase("Write the correct letter, ", italicFont));
 				instructions[1].add(new Phrase(Question.getQuestionCharacter(0) + "-" + Question.getQuestionCharacter(endQ - startQ + 1) + ",", boldItalic));
-				instructions[1].add(new Phrase("in boxes " + startQ + "-" + endQ + "on your answer sheet.", italicFont));
+				instructions[1].add(new Phrase("in boxes " + startQ + "-" + endQ + " on your answer sheet.", italicFont));
 				instructions[1].setSpacingAfter(10);
 				
 				for(int i = 0; i < instructions.length; i++) this.doc.add(instructions[i]);
@@ -479,6 +481,122 @@ public class PDFFiller {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
+	}
+	
+	private void fillMatching(int qNum, Pair<ArrayList<Pair<Integer, String>>, ArrayList<String>> pair_list, int startQ){
+		Table question_table = new Table(2,105f);
+		Table answer_table = new Table(2,105f);
+		String question;
+		int ans;
+		
+		for(int i = 0;i < qNum; i++){
+			question = pair_list.getLeft().get(i).getRight();
+			Phrase p = new Phrase();
+			p.add(new Phrase(question));
+			question_table.add_cells2(p, startQ+i);
+			ans = pair_list.getLeft().get(i).getLeft();
+			answer_table.add_cells2(new Phrase((char)(65+ans)+""), startQ+i);
+		}
+		
+		String choices;
+		PdfPTable table = new PdfPTable(1);
+		table.setWidthPercentage(70f);
+		PdfPCell cell = new PdfPCell();
+		cell.setPadding(5);
+		Table list_table = new Table(2,1,10,100f);
+		for(int i = 0; i < qNum; i++){
+			choices = pair_list.getRight().get(i);
+			list_table.add_cells_mc_inner(new Paragraph(choices), (char)(65+i));
+		}
+		cell.addElement(list_table.getTable());
+		//cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+		table.addCell(cell);
+		table.setSpacingBefore(20);
+		table.setSpacingAfter(20);
+		
+		try {
+			question_table.getTable().setSpacingBefore(10);
+			this.doc.add(question_table.getTable());
+			this.doc.add(table);
+			this.doc.newPage();
+			this.doc_ans.add(answer_table.getTable());
+		} catch (DocumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	private void fillCloze(int qNum, ArrayList<Pair<String,String>> pair_list, int startQ){
+		Table question_table = new Table(2,105f);
+		Table answer_table = new Table(2,105f);
+		String question;
+		String ans;
+		
+		for(int i = 0 ; i < qNum; i++){
+			question = pair_list.get(i).getLeft();
+			Phrase p = new Phrase();
+			p.add(new Phrase(question));
+			question_table.add_cells2(p, startQ+i);
+			ans = pair_list.get(i).getRight();
+			answer_table.add_cells2(new Phrase(ans), startQ+i);
+		}
+		try {
+			question_table.getTable().setSpacingBefore(20);
+			this.doc.add(question_table.getTable());
+			this.doc.newPage();
+			this.doc_ans.add(answer_table.getTable());
+		} catch (DocumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	private void fillST(int qNum ,Pair<ArrayList<Pair<String, Integer>>, ArrayList<String>> pair_list, int startQ){
+		Table question_table = new Table(2,105f);
+		Table answer_table = new Table(2,105f);
+		String question;
+		int ans;
+		
+		for(int i = 0;i < qNum; i++){
+			question = pair_list.getLeft().get(i).getLeft();
+			Phrase p = new Phrase();
+			p.add(new Phrase(question));
+			question_table.add_cells2(p, startQ+i);
+			ans = pair_list.getLeft().get(i).getRight();
+			answer_table.add_cells2(new Phrase((char)(65+ans)+""), startQ+i);
+		}
+		
+		String choices;
+		Paragraph listofheadings = new Paragraph("List",boldFont);
+		listofheadings.setSpacingAfter(5);
+		listofheadings.setAlignment(Element.ALIGN_CENTER);
+		PdfPTable table = new PdfPTable(1);
+		table.setWidthPercentage(50f);
+		PdfPCell cell = new PdfPCell();
+		cell.setPadding(10);
+		cell.addElement(listofheadings);
+		Table list_table = new Table(2,4,7,80f);
+		for(int i = 0; i < qNum; i++){
+			choices = pair_list.getRight().get(i);
+			list_table.add_cells_mc_inner(new Paragraph(choices), (char)(65+i));
+		}
+		cell.addElement(list_table.getTable());
+		cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+		table.addCell(cell);
+		table.setSpacingBefore(20);
+		table.setSpacingAfter(20);
+		
+		try {
+			question_table.getTable().setSpacingBefore(10);
+			this.doc.add(question_table.getTable());
+			this.doc.add(table);
+			this.doc.newPage();
+			this.doc_ans.add(answer_table.getTable());
+		} catch (DocumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 	
 	private void fillTFNG(int qNum, ArrayList<Pair<Integer, String>> pair_list, int startQ){

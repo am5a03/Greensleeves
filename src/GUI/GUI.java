@@ -99,6 +99,8 @@ public class GUI extends JPanel  {
         qtype_matching.setText("Matching");
         //panel.setLayout(new GridLayout(0, 2));
         JLabel question = new JLabel("Types of Questions");
+        JPanel btnPanel = new JPanel();
+        
         final JLabel filler = new JLabel(text);
         final JButton button = new JButton("Save");
         final JButton resetBtn = new JButton("Reset");
@@ -129,9 +131,25 @@ public class GUI extends JPanel  {
         panel.add(passage,BorderLayout.CENTER);
         panel.add(qtype,BorderLayout.EAST);
         //if (filler.getText().equals("Passage 3"))
-        panel.add(button,BorderLayout.SOUTH);
+        panel.add(btnPanel, BorderLayout.SOUTH);
+        btnPanel.add(button, BorderLayout.WEST);
+        btnPanel.add(resetBtn, BorderLayout.EAST);
+        //panel.add(button,BorderLayout.SOUTH);
         
         final JTextArea p1 = textarea1;
+        
+        resetBtn.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				if(button.getText().equals("Generate")){
+					button.setEnabled(true);
+				}
+			}
+        	
+        });
+        
         button.addActionListener(new ActionListener(){
  
 			@Override
