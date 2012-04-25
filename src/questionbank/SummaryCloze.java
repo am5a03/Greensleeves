@@ -68,6 +68,7 @@ public class SummaryCloze extends Question {
 			*/
 			
 			ArrayList <String> facts = FactEvaluator.getAllFact(paraphrased);
+			System.out.println("FACT DEBUG******************************************************: " + facts.size());
 			String targetFact = facts.get(r.nextInt(facts.size()));
 			String answer = targetFact;
 			String result = paraphrased;

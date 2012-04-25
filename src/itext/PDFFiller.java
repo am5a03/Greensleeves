@@ -261,6 +261,12 @@ public class PDFFiller {
 			}else if(q instanceof SevenTypes){
 				
 			}else if(q instanceof SummaryClozes){
+				SummaryClozes scs = (SummaryClozes)q;
+				
+				fillQuestionHeading(i/2, QuestionType.cloze, this.questinCount, this.questinCount + scs.getQuestionAnsPair().size() - 1);
+				//System.out.println("****SCS DEBUG: " + scs.getQuestionAnsPair());
+				//System.out.println("****SCS DEBUG: " + scs.getQuestionAnsPair().size());
+				//fillCloze(scs.getQuestionAnsPair().size(), scs.getQuestionAnsPair(), this.questinCount);
 				
 			}
 		}
@@ -536,6 +542,7 @@ public class PDFFiller {
 		String ans;
 		
 		for(int i = 0 ; i < qNum; i++){
+			this.questinCount++;
 			question = pair_list.get(i).getLeft();
 			Phrase p = new Phrase();
 			p.add(new Phrase(question));
