@@ -28,10 +28,8 @@
 	<classpathentry kind="lib" path="import/itext-5.2.1/itextpdf-5.2.1-javadoc.jar"/>
 	<classpathentry kind="lib" path="import/itext-5.2.1/itextpdf-5.2.1-sources.jar"/>
 	<classpathentry kind="lib" path="import/itext-5.2.1/itextpdf-5.2.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/NW LEUNG/Desktop/AI/ritaWN/library/core1.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/NW LEUNG/Desktop/AI/ritaWN/library/ritaWN.jar"/>
-	<classpathentry kind="lib" path="C:/Users/NW LEUNG/Desktop/AI/ritaWN/library/supportWN.jar"/>
 	<classpathentry kind="lib" path="import/gson-2.1.jar"/>
 	<classpathentry kind="lib" path="import/imgscalr-lib-4.2.jar"/>
+	<classpathentry kind="lib" path="import/core1.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

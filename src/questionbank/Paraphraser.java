@@ -69,15 +69,15 @@ public class Paraphraser {
 								break;
 				}
 				//Integer n[] = tp.getNouns();
-				System.err.println("done parse nouns");
-				for (Integer j : n)
-					System.err.println(j.toString());
+				//System.err.println("done parse nouns");
+				//for (Integer j : n)
+					//System.err.println(j.toString());
 				//for (Integer ni : n){
 				//Integer ni = 0;
 				for (Integer ni : n){
 					if (r.nextDouble() < this.prob){
-						System.out.println(ni.toString());
-						System.err.println(inter[ni]);
+						//System.out.println(ni.toString());
+						//System.err.println(inter[ni]);
 						String sw = "";
 						
 						try{
@@ -86,7 +86,7 @@ public class Paraphraser {
 						}catch (NullPointerException e){
 							sw = inter[ni];
 						}
-						System.err.println(sw);
+						//System.err.println(sw);
 						inter[ni] = sw;
 					}
 				}

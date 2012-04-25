@@ -128,24 +128,27 @@ public class MCQ extends Question{
 				String instruction = "Which of the following correctly describe the paragraph " + Question.getQuestionCharacter(paragraphNum) + " ? (Choose the best one)";
 
 				//The first one is of the highest relevancy, mark it as answer
+				System.out.println(conceptPair);
 				choices[0] = conceptPair.get(0).getRight();
 				conceptPair.remove(0);
 				this._ans = 0; //Choice 0 is answer
-
+				
 				Collections.shuffle(conceptPair); //Randomly pick some concepts
-
-				if(conceptPair.size() > 4){
-					for(int i = 1; i <= 3; i++){
-						choices[i] = conceptPair.get(i).getRight();
-					}
+				
+				for(int i = 1; i <= 3; i++){
+					choices[i] = conceptPair.get(i).getRight();
 				}
 
 				//Shuffle the answer
 				shuffle(choices);
+				for(int i = 0; i < choices.length; i++) System.out.println(choices[i]);
 				
 				this.instructions[0] = instruction;
 				super.setInstruction(this.instructions);
 				this.questionAnsPair = new Pair<Integer, String[]>(this._ans, choices);
+				for(int j = 0; j < choices.length; j++){
+					//System.out.println(choices[j]);
+				}
 			}
 			//SentenceProcessor.extractConcept(p.getParagraph());
 		} catch (Exception e) {

@@ -65,9 +65,14 @@ public class GUI extends JPanel  {
     protected JComponent makeTextPanel3(String text) {
         JPanel panel = new JPanel();
         JLabel filler = new JLabel(text);
-        filler.setHorizontalAlignment(JLabel.CENTER);
-        panel.setLayout(new GridLayout(1, 1));
+        JLabel filler2 = new JLabel();
+        filler.setHorizontalAlignment(JLabel.LEFT);
+        filler2.setHorizontalAlignment(JLabel.LEFT);
+        filler.setText("1. Heading is on the first line.");
+        filler2.setText("2. Each paragraph is speparated by a enter");
+        panel.setLayout(new GridLayout(2, 1));
         panel.add(filler);
+        panel.add(filler2);
         return panel;
     }
     protected JComponent makeTextPanel2(String text) {
@@ -84,19 +89,24 @@ public class GUI extends JPanel  {
         final JCheckBox qtype_heading = new JCheckBox();
         final JCheckBox qtype_fact = new JCheckBox();
         final JCheckBox qtype_cloze = new JCheckBox();
+        final JCheckBox qtype_matching = new JCheckBox();
         qtype_info.setText("Information identification");
         qtype_mcq.setText("Multiple Choice Questions");
         qtype_tf.setText("True/False Not Given");
         qtype_heading.setText("Paragraph Heading");
         qtype_fact.setText("Factual Question");
         qtype_cloze.setText("Summary Cloze");
+        qtype_matching.setText("Matching");
         //panel.setLayout(new GridLayout(0, 2));
         JLabel question = new JLabel("Types of Questions");
+        JPanel btnPanel = new JPanel();
+        
         final JLabel filler = new JLabel(text);
         final JButton button = new JButton("Save");
+        final JButton resetBtn = new JButton("Reset");
         
         if (filler.getText().equals("Passage 3")){
-        	button.setText("Generate");
+        	button.setText("Generate");        	
         }
         	
         
@@ -107,22 +117,39 @@ public class GUI extends JPanel  {
         filler.setHorizontalAlignment(JLabel.CENTER);
         passage.setLayout (new GridLayout(1, 1));
         passage.add(scrollPane1);
-        qtype.setLayout(new GridLayout(6, 1));
+        qtype.setLayout(new GridLayout(7, 1));
         qtype.add(qtype_info);
         qtype.add(qtype_heading);
         qtype.add(qtype_mcq);
         qtype.add(qtype_tf);
         qtype.add(qtype_fact);
         qtype.add(qtype_cloze);
+        qtype.add(qtype_matching);
         panel.setLayout (new BorderLayout());
         panel.add(filler,BorderLayout.NORTH);
         
         panel.add(passage,BorderLayout.CENTER);
         panel.add(qtype,BorderLayout.EAST);
         //if (filler.getText().equals("Passage 3"))
-        panel.add(button,BorderLayout.SOUTH);
+        panel.add(btnPanel, BorderLayout.SOUTH);
+        btnPanel.add(button, BorderLayout.WEST);
+        btnPanel.add(resetBtn, BorderLayout.EAST);
+        //panel.add(button,BorderLayout.SOUTH);
         
         final JTextArea p1 = textarea1;
+        
+        resetBtn.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				if(button.getText().equals("Generate")){
+					button.setEnabled(true);
+				}
+			}
+        	
+        });
+        
         button.addActionListener(new ActionListener(){
  
 			@Override
@@ -154,6 +181,10 @@ public class GUI extends JPanel  {
 				if (qtype_cloze.isSelected()){
 					count ++;
 					qt.add(QuestionType.cloze);
+				}
+				if (qtype_matching.isSelected()){
+					count++;
+					qt.add(QuestionType.Matching);
 				}
 				if (p1.getText().equals(""))
 					JOptionPane.showMessageDialog(null,
@@ -237,7 +268,7 @@ public class GUI extends JPanel  {
      */
     private static void createAndShowGUI() {
         //Create and set up the window.
-        JFrame frame = new JFrame("AI");
+        JFrame frame = new JFrame("GreenSleeves");
         frame.setSize(600, 400);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JLabel label = new JLabel("Greensleeves");

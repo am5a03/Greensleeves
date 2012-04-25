@@ -33,6 +33,12 @@ public class SevenTypes extends Question {
 		 * >
 		 */
 
+	private boolean debug = false;
+	
+	public void toggleDebug(){
+		debug = !debug;
+	}
+	
 	/**
 	 * 
 	 */
@@ -46,10 +52,13 @@ public class SevenTypes extends Question {
 		this.qnNum = qnNum;
 		this.questionType = Question.QuestionType.SevenTypes;
 		
-		instruc[0] = "this is an instruction";
+		//instruc[0] = "this is an instruction";
 		this.setInstruction(instruc);
 	}
 
+	
+	
+	
 	/* (non-Javadoc)
 	 * @see questionbank.IQuestion#questionGen()
 	 */
@@ -91,6 +100,10 @@ public class SevenTypes extends Question {
 			
 		}
 		potentialFacts = new ArrayList<String>(new HashSet<String>(potentialFacts));
+		/*System.err.println("potential facts");
+		for (String p : potentialFacts){
+			System.out.println(p);
+		}*/
 		
 		Random r = new Random();
 		ArrayList<String> selectedFacts = new ArrayList<String>();
@@ -100,17 +113,29 @@ public class SevenTypes extends Question {
 			for (int i = 0; i < qnNum; i++){
 				Integer selected = r.nextInt(potentialFacts.size());
 				selectedFacts.add(potentialFacts.get(selected));
+				potentialFacts.remove(potentialFacts.get(selected));
+				//potentialFacts.
+				
 				potentialFacts.remove(selected);
+				System.out.println("---------------potential facts");
+				for (String p : potentialFacts){
+					System.out.println(p);
+				}
 			}
 		}else{
 			selectedFacts = potentialFacts;
+		}
+		
+		System.out.println("----------------selected facts");
+		for (String s : selectedFacts){
+			System.out.println(s);
 		}
 		
 		//choices = new ArrayList<String>();
 		//choices.addAll(ChoiceGenerator.ChoiceGenerator((String[])selectedFacts.toArray(new String[selectedFacts.size()]), qnNum+2));
 		
 		try {
-			for (String i : (ChoiceGenerator.ChoiceGenerator((String[])selectedFacts.toArray(new String[selectedFacts.size()]), qnNum+2))){
+			for (String i : (ChoiceGenerator.ChoiceGenerator((String[])selectedFacts.toArray(new String[selectedFacts.size()]), qnNum, 2))){
 				choices.add(i);
 			}
 		} catch (IOException e) {
@@ -119,19 +144,29 @@ public class SevenTypes extends Question {
 		}
 		
 		for (String f : selectedFacts){
+			System.out.println("====== fact: "+f);
 			ArrayList<Sentence> tempSelectedQs = FactEvaluator.getSentenceAbout(f, essay);
 
 			String question = (tempSelectedQs.get(r.nextInt(tempSelectedQs.size())).toString());
 			question = paraphrase(question, f, targetType);
+			System.out.println(question);
+			for (String c : choices){
+				System.out.println(">>choice>>" + c);
+			}
+			
 			Integer choiceNum = choices.indexOf(f);
 			Pair<String, Integer> pp = new Pair<String, Integer>(question, choiceNum);
 			selectedQs.add(pp);
-			
+			System.out.println(choiceNum.toString());
 			
 		}
 		
-		questionAnsPair.setLeft(selectedQs);
-		questionAnsPair.setRight(choices);
+		questionAnsPair = new Pair<ArrayList<Pair<String, Integer>>, ArrayList<String>>(selectedQs, choices);
+		
+		//questionAnsPair.setLeft(selectedQs);
+		//questionAnsPair.setRight(choices);
+		
+
 
 		instruc[0] = "Look at the following information and the list of " + targetType.toString().toLowerCase() + " below.";
 		instruc[1] = "Match each information with the correct "+targetType.toString().toLowerCase()+".";
@@ -139,6 +174,11 @@ public class SevenTypes extends Question {
 		instruc[3] = "List of " + targetType.toString().toLowerCase();
 		
 		this.setInstruction(instruc);
+		java.util.Collections.shuffle(choices);
+		System.out.println(instruc[3]);
+		for (String c : choices){
+			System.out.println(c);
+		}
 		
 		/*
 		for (int i = 0; i < qnNum; i++){
@@ -162,31 +202,33 @@ public class SevenTypes extends Question {
 		String replacement;
 		switch (targetType){
 		case DATE:
-			replacement = "when";
+			replacement = "this date";
 			break;
 		case LOCATION:
-			replacement = "where";
+			replacement = "this location";
 			break;
 		case MONEY:
-			replacement = "how much";
+			replacement = "this amount";
 			break;
 		case ORGANIZATION:
-			replacement = "who";
+			replacement = "this organization";
 			break;
 		case PERCENT:
-			replacement = "how many";
+			replacement = "this percentage";
 			break;
 		case PERSON:
-			replacement = "who";
+			replacement = "this person";
 			break;
 		case TIME:
-			replacement = "when";
+			replacement = "this time";
 			break;
 		default:
 			replacement = fact;
 			break;
 		}
-		result.replaceAll(fact, replacement);
+		//result.replaceAll(fact, replacement);
+		String inter[] = result.split(fact);
+		result = inter[0] + " " + replacement + " " + inter[1];
 		try {
 			Paraphraser p = new Paraphraser(result);
 			p.setChanges(false, true, true, false, 0.7);

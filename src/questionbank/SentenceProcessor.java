@@ -604,9 +604,37 @@ public class SentenceProcessor {
 				Element e = (Element) i.next();
 				conceptPair.add(XMLReader.getConcept(e));
 			}
+			
+			//Do the extract keyword if the concepts returned is smaller than 3
+			if(conceptPair.size() <= 3){
+				System.out.println("DEBUG********************************* Getting more concept pair");
+				ArrayList<Pair<Double, String>> keywordPair = extractKeyword(paragraph);
+				for(int i = 0; i < keywordPair.size(); i++){
+					conceptPair.add(keywordPair.get(i));
+				}
+			}
 		}
 		
 		return conceptPair;
+	}
+	
+	public static ArrayList<Pair<Double, String>> extractKeyword(String paragraph) throws Exception{
+		AlchemyAPI alchemyObj = AlchemyAPI
+				.GetInstanceFromFile("lib/api_key.txt");
+		org.w3c.dom.Document w3cdoc = alchemyObj.TextGetRankedKeywords(paragraph);
+		Document doc = XMLReader.docConverter(w3cdoc);
+		List nodeList = doc.selectNodes("//results/keywords/keyword");
+		
+		ArrayList<Pair<Double, String>> keywordPair = new ArrayList<Pair<Double, String>>();
+		
+		if(nodeList != null){
+			for(Iterator i = nodeList.iterator(); i.hasNext();){
+				Element e = (Element) i.next();
+				keywordPair.add(XMLReader.getKeyword(e));
+			}
+		}
+		
+		return keywordPair;
 	}
 	
 	//public static 

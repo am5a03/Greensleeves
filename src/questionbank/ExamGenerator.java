@@ -84,6 +84,19 @@ public class ExamGenerator implements Runnable{
 			
 			genMatching(essays[i], min);
 			
+		}else if(qt.get(0) == QuestionType.SevenTypes){
+			int numOfParas = essays[i].getNumOfParas();
+			int quota = this.questionQuota[i];
+			int min = Math.min(numOfParas, quota);
+			genSevenTypes(essays[i], min);
+		}else if(qt.get(0) == QuestionType.cloze){
+			int numOfParas = essays[i].getNumOfParas();
+			int quota = this.questionQuota[i];
+			int min = Math.min(numOfParas, quota);
+			//for(int j = 0; j<min; j++){
+			//	getSummaryCloze(essays[j], (new Random()).nextInt(essays[j].getParagraphs().size()));
+			//}
+			getSummaryCloze(essays[i], min);
 		}
 		
 		if(qt.get(1) == QuestionType.ParagraphHeading){
@@ -101,13 +114,28 @@ public class ExamGenerator implements Runnable{
 			
 			genTFNG(essays[i], min);
 		}else if(qt.get(1) == QuestionType.SevenTypes){
+			int numOfParas = essays[i].getNumOfParas();
+			int quota = this.questionQuota[i];
+			int min = Math.min(numOfParas, quota);
 			
+			genSevenTypes(essays[i], min);
 		}else if(qt.get(1) == QuestionType.Matching){
 			int numOfParas = essays[i].getNumOfParas();
 			int quota = this.questionQuota[i];
 			int min = Math.min(numOfParas, quota);
 			
 			genMatching(essays[i], min);
+		}else if(qt.get(1) == QuestionType.cloze){
+			int numOfParas = essays[i].getNumOfParas();
+			int quota = this.questionQuota[i];
+			int min = Math.min(numOfParas, quota);
+
+			//for(int j = 0; j<min; j++){
+			//	getSummaryCloze(essays[j], (new Random()).nextInt(essays[j].getParagraphs().size()));
+			//}
+			getSummaryCloze(essays[i], min);
+
+
 		}
 	}
 	
@@ -173,6 +201,12 @@ public class ExamGenerator implements Runnable{
 		Matching matching = new Matching(e, numOfQs);
 		matching.questionGen();
 		questionList.add(matching);
+	}
+	
+	private synchronized void getSummaryCloze(Essay e, Integer para){
+		SummaryClozes summaryClozes = new SummaryClozes(e, para);
+		summaryClozes.questionGen();
+		questionList.add(summaryClozes);
 	}
 	
 	/**

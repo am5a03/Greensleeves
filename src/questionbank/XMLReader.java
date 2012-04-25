@@ -68,8 +68,24 @@ public class XMLReader {
 			return new Pair<Double, String>(_rel, _text);
 		}else{
 			return new Pair<Double, String>(0.0, "");
-		}
+		}		
+	}
+	
+	public static Pair<Double, String> getKeyword(Node node){
+		String textXpath = "./text";
+		String relevanceXpath = "./relevance";
 		
+		Element text = (Element)node.selectSingleNode(textXpath);
+		Element rel = (Element)node.selectSingleNode(relevanceXpath);
+		
+		if(text != null && rel != null){
+			Double _rel = Double.parseDouble(rel.getText());
+			String _text = text.getText();
+			
+			return new Pair<Double, String>(_rel, _text);
+		}else{
+			return new Pair<Double, String>(0.0, "");
+		}		
 		
 	}
 }

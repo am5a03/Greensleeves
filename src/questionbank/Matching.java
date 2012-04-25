@@ -14,9 +14,9 @@ public class Matching extends Question{
 	private int numOfQs;
 	private Essay essay;
 	private ArrayList<Pair<Integer, String>> questionList = new ArrayList<Pair<Integer, String>>();
-	private ArrayList<Pair<Integer, String>> answerList = new ArrayList<Pair<Integer, String>>();
+	private ArrayList<String> answerList = new ArrayList<String>();
 	
-	private Pair<ArrayList<Pair<Integer, String>>, ArrayList<Pair<Integer, String>>> questionAnsPair;
+	private Pair<ArrayList<Pair<Integer, String>>, ArrayList<String>> questionAnsPair;
 	/*
 	Matching(){
 	//this.questionType = Question.QuestionType.Matching;
@@ -119,7 +119,7 @@ public class Matching extends Question{
 	//function to check Part of speech
 	public String checkPos(String word){
 		
-		RiWordnet wordnet = new RiWordnet(null);
+		RiWordnet wordnet = new RiWordnet();
 		String pos = wordnet.getBestPos(word);			
 		if(pos == null)                                                             
 			pos = "prep";
@@ -362,18 +362,15 @@ public class Matching extends Question{
 			String s = paraphrase(sentences.get(i));
 			Pair<String, String> sentPair = breakSent(s);
 			this.questionList.add(new Pair<Integer, String>(i, sentPair.getLeft()));
-			this.answerList.add(new Pair<Integer, String>(i, sentPair.getRight()));
+			this.answerList.add(sentPair.getRight());
 		}
 		
 		Collections.shuffle(questionList);
-		Collections.shuffle(answerList);
 		
-		questionAnsPair = new Pair<ArrayList<Pair<Integer, String>>, ArrayList<Pair<Integer, String>>>(questionList, answerList);
-		
-		
+		questionAnsPair = new Pair<ArrayList<Pair<Integer, String>>, ArrayList<String>>(questionList, answerList);
 	}
 	
-	public Pair<ArrayList<Pair<Integer, String>>, ArrayList<Pair<Integer, String>>> getQuestionAnsPair(){
+	public Pair<ArrayList<Pair<Integer, String>>, ArrayList<String>> getQuestionAnsPair(){
 		return this.questionAnsPair;
 	}
 
