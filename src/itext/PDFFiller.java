@@ -477,12 +477,12 @@ public class PDFFiller {
 				for(int i = 0; i < instructions.length; i++) instructions[i] = new Paragraph();
 				
 				instructions[0].add(new Phrase("Complete each sentence with the correct ending, ", italicFont));
-				instructions[0].add(new Phrase(Question.getQuestionCharacter(0) + "-" + Question.getQuestionCharacter(endQ - startQ + 1), boldItalic));
+				instructions[0].add(new Phrase(Question.getQuestionCharacter(0) + "-" + Question.getQuestionCharacter(endQ - startQ), boldItalic));
 				instructions[0].add(new Phrase(", below.", italicFont));
 				instructions[0].setSpacingAfter(10);
 				
 				instructions[1].add(new Phrase("Write the correct letter, ", italicFont));
-				instructions[1].add(new Phrase(Question.getQuestionCharacter(0) + "-" + Question.getQuestionCharacter(endQ - startQ + 1) + ",", boldItalic));
+				instructions[1].add(new Phrase(Question.getQuestionCharacter(0) + "-" + Question.getQuestionCharacter(endQ - startQ) + ",", boldItalic));
 				instructions[1].add(new Phrase("in boxes " + startQ + "-" + endQ + " on your answer sheet.", italicFont));
 				instructions[1].setSpacingAfter(10);
 				
@@ -498,11 +498,11 @@ public class PDFFiller {
 				instruction.setSpacingAfter(10);
 				
 				instruction2.add(new Phrase("Match each item with correct answer in the list, ",italicFont));
-				instruction2.add(new Phrase((char)65+"-"+(char)(65+endQ-startQ),boldItalic));
+				instruction2.add(new Phrase((char)65+"-"+(char)(65+endQ-startQ + 2),boldItalic));
 				instruction2.setSpacingAfter(10);
 				
 				instruction3.add(new Phrase("Write the correct letter, ",italicFont));
-				instruction3.add(new Phrase((char)65+"-"+(char)(65+endQ-startQ),boldItalic));
+				instruction3.add(new Phrase((char)65+"-"+(char)(65+endQ-startQ + 2),boldItalic));
 				instruction3.add(new Phrase(", in boxes "+ startQ + "-" + endQ+" on your answer sheet.",italicFont));
 				instruction3.setSpacingAfter(10);
 				
@@ -534,8 +534,8 @@ public class PDFFiller {
 		String question;
 		int ans;
 		
-		for(int i = 0;i < qNum; i++){
-			this.questinCount++;
+		for(int i = 0;i < pair_list.getRight().size(); i++){
+			if(i < qNum)this.questinCount++;
 			question = pair_list.getLeft().get(i).getRight();
 			Phrase p = new Phrase();
 			p.add(new Phrase(question));
@@ -608,6 +608,7 @@ public class PDFFiller {
 		int ans;
 		
 		for(int i = 0;i < qNum; i++){
+			this.questinCount++;
 			question = pair_list.getLeft().get(i).getLeft();
 			Phrase p = new Phrase();
 			p.add(new Phrase(question));
