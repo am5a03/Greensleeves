@@ -93,4 +93,24 @@ public class Tagparsing {
 		return this.getPartsOfSpeech("JJ");
 	}
 	
+	public boolean isStickLeftPunc(Integer pos){
+		String splitted[] = this.parsed.split(" ");
+		//System.out.println(splitted[pos]);
+		String p = splitted[pos].split("/")[1];
+		if ((p.equals(".")) || (p.equals(",")) || (p.equals(":")))
+			return true;
+		else 
+			return false;
+	}
+	
+	/*
+	public boolean isStickRightPunc(Integer pos){
+		String splitted[] = this.parsed.split(" ");
+		String p = splitted[pos].split("/")[1];
+		if ((p == "(") || (p == "$") || (p == "#"))
+			return true;
+		else 
+			return false;
+	}
+	*/
 }

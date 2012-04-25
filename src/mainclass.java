@@ -43,17 +43,17 @@ public class mainclass {
 		LibraryInitializer li = new LibraryInitializer();
 		
 		
-		Essay e = new Essay("lib/test1.txt");
+		Essay e = new Essay("lib/test3.txt");
 		Essay[] es = new Essay[1];
 		es[0] = e;
 		
-		//SevenTypes st = new SevenTypes(e, 4);
-		//st.questionGen();
+		SevenTypes st = new SevenTypes(e, 4);
+		st.questionGen();
 		
 		//System.out.println("hi");
 		
-		SummaryCloze sc = new SummaryCloze(e, (new Random()).nextInt(e.getParagraphs().size()));
-		sc.questionGen();
+		//SummaryCloze sc = new SummaryCloze(e, (new Random()).nextInt(e.getParagraphs().size()));
+		//sc.questionGen();
 		
 		
 	}

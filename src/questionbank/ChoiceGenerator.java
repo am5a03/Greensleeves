@@ -12,7 +12,7 @@ public class ChoiceGenerator {
 		
 		// discoDir is the path to get the DISCO wordbase
 		//String discoDir = "Z:\\AdvancedBase";
-		String discoDir = "C:\\Wordbase";
+		String discoDir = "C:\\disco";
 		DISCO disco = new DISCO(discoDir, false);
 		
 		String[] ansSet;

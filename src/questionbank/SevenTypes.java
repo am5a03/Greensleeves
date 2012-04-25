@@ -159,7 +159,7 @@ public class SevenTypes extends Question {
 		//choices.addAll(ChoiceGenerator.ChoiceGenerator((String[])selectedFacts.toArray(new String[selectedFacts.size()]), qnNum+2));
 		
 		try {
-			for (String i : (ChoiceGenerator.ChoiceGenerator((String[])selectedFacts.toArray(new String[selectedFacts.size()]), qnNum, 2))){
+			for (String i : (ChoiceGenerator.ChoiceGenerator((String[])selectedFacts.toArray(new String[selectedFacts.size()]), selectedFacts.size(), 2))){
 				choices.add(i);
 			}
 		} catch (IOException e) {

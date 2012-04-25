@@ -99,9 +99,13 @@ public class Paraphraser {
 		
 		String result = "";
 		for (int i = 0; i < inter.length; i++)
-			if (i != inter.length - 1)
-				result += inter[i] + " ";
-			else
+			if (i != inter.length - 1){
+				if (tp.isStickLeftPunc(i+1)){
+					result += inter[i];
+					System.out.println("punc");
+				}else
+					result += inter[i] + " ";
+			}else
 				result += inter[i];
 		return result;
 	}
