@@ -40,7 +40,11 @@ public class ChoiceGenerator {
 		simResult = new ReturnDataBN[n];
 		
 		for(int i = 0; i < n ; i++){
-			String[] word = options[i].split(" ");
+			String[] word = {""};
+			if(i < options.length){
+				word = options[i].split(" ");
+			}
+			
 			
 		// Do it for long options, no check repeating option
 			if( word.length > 1){
@@ -63,9 +67,12 @@ public class ChoiceGenerator {
 			
 				//Get similar words from DISCO
 				for(int j = 0; j < n; j++){
-					if(options[j] != null){
-						simResult[j] = disco.similarWords( options[j] ); 
+					if(j < options.length){
+						if(options[j] != null){
+							simResult[j] = disco.similarWords( options[j] ); 
+						}
 					}
+					
 				}
 		        
 		        int outputNo = 1; // the number for the similar word chose to use
@@ -76,10 +83,12 @@ public class ChoiceGenerator {
 		        		
 		        		
 		        		for(int j = 0; j < n; j++){
+		        			if(j < options.length){
 		        				if ( simResult[k].words[outputNo].equals(options[j]) ){
 		        					outputNo++;
 		        					j = 0;
 		        				}
+		        			}		        				
 		        		}
 		        				
 		        		for(int j = 0; j < wrongAnsShortCounter; j++){
@@ -116,8 +125,11 @@ public class ChoiceGenerator {
 			
         //Generate AnsSet with true and false answers
         for( int j = 0; j < n; j++){
-        	ansSet[j] =  options[j];
-        	ansSet[j + ex] =  wrongAns[j];
+        	if(j < options.length){
+        		ansSet[j] =  options[j];
+        		ansSet[j + ex] =  wrongAns[j];
+        	}
+        	
         	
         }
         

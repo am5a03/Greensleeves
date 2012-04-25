@@ -262,7 +262,7 @@ public class PDFFiller {
 				SevenTypes sts = (SevenTypes)q;
 				
 				fillQuestionHeading(i/2, QuestionType.SevenTypes, this.questinCount, this.questinCount + sts.getQuestionAnsPair().getLeft().size() - 1);
-				fillST(sts.getQuestionAnsPair().getLeft().size(), sts.getQuestionAnsPair(), this.questinCount);
+				fillST(sts.getQuestionAnsPair().getLeft().size(), sts.getQuestionAnsPair(), sts.getInstructions(), this.questinCount);
 				
 			}else if(q instanceof SummaryClozes){
 				SummaryClozes scs = (SummaryClozes)q;
@@ -598,7 +598,10 @@ public class PDFFiller {
 		
 	}
 	
-	private void fillST(int qNum ,Pair<ArrayList<Pair<String, Integer>>, ArrayList<String>> pair_list, int startQ){
+	/*
+	 * Fill seven types
+	 */
+	private void fillST(int qNum ,Pair<ArrayList<Pair<String, Integer>>, ArrayList<String>> pair_list, String[] instructions , int startQ){
 		Table question_table = new Table(2,105f);
 		Table answer_table = new Table(2,105f);
 		String question;
@@ -614,7 +617,7 @@ public class PDFFiller {
 		}
 		
 		String choices;
-		Paragraph listofheadings = new Paragraph("List",boldFont);
+		Paragraph listofheadings = new Paragraph(instructions[3] ,boldFont);
 		listofheadings.setSpacingAfter(5);
 		listofheadings.setAlignment(Element.ALIGN_CENTER);
 		PdfPTable table = new PdfPTable(1);
@@ -623,7 +626,7 @@ public class PDFFiller {
 		cell.setPadding(10);
 		cell.addElement(listofheadings);
 		Table list_table = new Table(2,4,7,80f);
-		for(int i = 0; i < qNum; i++){
+		for(int i = 0; i < pair_list.getRight().size(); i++){
 			choices = pair_list.getRight().get(i);
 			list_table.add_cells_mc_inner(new Paragraph(choices), (char)(65+i));
 		}
