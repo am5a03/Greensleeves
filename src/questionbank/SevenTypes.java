@@ -57,7 +57,29 @@ public class SevenTypes extends Question {
 	}
 
 	
-	
+	public boolean isRubbish(){
+		FactEvaluator.type targetType = FactEvaluator.type.PERSON; // type to generate questions, default person
+		Integer maxTypeOccurance = 0;
+		for (FactEvaluator.type factType : FactEvaluator.type.values()){
+			Integer tempTypeCount = 0;
+			for (Paragraph p : essay.getParagraphs()){
+				for (Sentence s : p.getSentences()){
+					tempTypeCount += FactEvaluator.getNumOfFact(factType, s.toString());
+				}
+			}
+			if (tempTypeCount > maxTypeOccurance){
+				maxTypeOccurance = tempTypeCount;
+				targetType = factType;
+			}
+		}
+		
+		if (maxTypeOccurance < 4){
+			return true;
+		}else{
+			return false;
+		}
+		
+	}
 	
 	/* (non-Javadoc)
 	 * @see questionbank.IQuestion#questionGen()
@@ -65,6 +87,8 @@ public class SevenTypes extends Question {
 	@Override
 	public void questionGen() {
 		// TODO Auto-generated method stub
+		
+		
 		Ranker ranker = new Ranker();
 		FactEvaluator.type targetType = FactEvaluator.type.PERSON; // type to generate questions, default person
 		Integer maxTypeOccurance = 0;
