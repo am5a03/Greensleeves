@@ -59,6 +59,7 @@ public class SummaryCloze extends Question {
 			answer = targetFact;
 			result = paraphrased;
 			
+			
 			//result.replace(targetFact, "_______________");
 			//result.re
 			String inter[] = result.split(targetFact);
