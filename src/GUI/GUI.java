@@ -11,6 +11,7 @@ import questionbank.ExamGenerator;
 import questionbank.LibraryInitializer;
 import questionbank.Parameters;
 import questionbank.Question.QuestionType;
+import questionbank.SevenTypes;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -144,8 +145,9 @@ public class GUI extends JPanel  {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				if(button.getText().equals("Generate")){
+				if(button.getText().equals("Generating...")){
 					button.setEnabled(true);
+					button.setText("Generate");
 				}
 			}
         	
@@ -198,18 +200,6 @@ public class GUI extends JPanel  {
 //					for(int i = 0; i < qt.size(); i++){
 //						System.out.println(qt.get(i));
 //					}
-					if(text.equals("Passage 1")){
-						qts.add(0, qt);
-					}else if(text.equals("Passage 2")){
-						qts.add(1, qt);
-					}else if(text.equals("Passage 3")){
-						qts.add(2, qt);
-					}
-					
-					for(int i = 0; i < qts.size(); i++){
-						System.out.println("Index" + i + " "+ qts.get(i));
-					}
-					System.out.println("");
 					try {
 						outFile1 = new FileWriter(fileName +".txt");
 						p1.write(outFile1);
@@ -217,9 +207,50 @@ public class GUI extends JPanel  {
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
+					if(text.equals("Passage 1")){
+						qts.add(0, qt);
+						if(qtype_fact.isSelected()){
+							SevenTypes st = new SevenTypes(new Essay(Parameters.PASSAGE1), 0);
+							if(st.isRubbish()){
+								JOptionPane.showMessageDialog(null,
+									    "This passage does not contain enough facts, choose another type",
+									    "Inane warning",
+									    JOptionPane.WARNING_MESSAGE);
+							}
+						}
+					}else if(text.equals("Passage 2")){
+						qts.add(1, qt);
+						if(qtype_fact.isSelected()){
+							SevenTypes st = new SevenTypes(new Essay(Parameters.PASSAGE2), 4);
+							if(st.isRubbish()){
+								JOptionPane.showMessageDialog(null,
+										"This passage does not contain enough facts, choose another type",
+									    "Inane warning",
+									    JOptionPane.WARNING_MESSAGE);
+							}
+						}
+					}else if(text.equals("Passage 3")){
+						qts.add(2, qt);
+						if(qtype_fact.isSelected()){
+							SevenTypes st = new SevenTypes(new Essay(Parameters.PASSAGE3), 4);
+							if(st.isRubbish()){
+								JOptionPane.showMessageDialog(null,
+										"This passage does not contain enough facts, choose another type",
+									    "Inane warning",
+									    JOptionPane.WARNING_MESSAGE);
+							}
+						}
+					}
+					
+					for(int i = 0; i < qts.size(); i++){
+						System.out.println("Index" + i + " "+ qts.get(i));
+					}
+					System.out.println("");
+					
 					if(button.getText().equals("Generate")){
 						loadAndGen();
 						button.setEnabled(false);
+						button.setText("Generating...");
 						
 					}
 				}
