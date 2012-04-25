@@ -1,7 +1,7 @@
 package questionbank;
 public class Parameters {
 	public static class disco{
-		static String discoDir = "lib/wordbase";
+		static String discoDir = "C:\\wordbase";
 	}
 	
 	static int ESSAY_1Q = 13;
