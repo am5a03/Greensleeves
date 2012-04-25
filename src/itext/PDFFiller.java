@@ -257,7 +257,10 @@ public class PDFFiller {
 				Matching matching = (Matching)q;
 				
 				fillQuestionHeading(i/2, QuestionType.Matching, this.questinCount, this.questinCount + matching.getQuestionAnsPair().getRight().size() - 1);
+				fillMatching(matching.getQuestionAnsPair().getRight().size(), matching.getQuestionAnsPair(), this.questinCount);
 			}else if(q instanceof SevenTypes){
+				
+			}else if(q instanceof SummaryClozes){
 				
 			}
 		}
@@ -490,6 +493,7 @@ public class PDFFiller {
 		int ans;
 		
 		for(int i = 0;i < qNum; i++){
+			this.questinCount++;
 			question = pair_list.getLeft().get(i).getRight();
 			Phrase p = new Phrase();
 			p.add(new Phrase(question));
