@@ -534,8 +534,8 @@ public class PDFFiller {
 		String question;
 		int ans;
 		
-		for(int i = 0;i < pair_list.getRight().size(); i++){
-			if(i < qNum)this.questinCount++;
+		for(int i = 0; i < qNum; i++){
+			this.questinCount++;
 			question = pair_list.getLeft().get(i).getRight();
 			Phrase p = new Phrase();
 			p.add(new Phrase(question));

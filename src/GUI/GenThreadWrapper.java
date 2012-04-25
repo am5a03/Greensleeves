@@ -27,13 +27,13 @@ public class GenThreadWrapper implements Runnable {
 			e.printStackTrace();
 		}
     	
-    	PDFFiller pdf = new PDFFiller(essays, "IELTS", eg.getQuestionList());
+    	PDFFiller pdf = new PDFFiller(essays, GUI.outputPath, eg.getQuestionList());
 //    	System.out.println(eg.getQuestionList());
     	pdf.generate();
     	JOptionPane.showMessageDialog(null,
-			    "Exam paper is ready, please check.",
+			    "Exam paper is ready at " + GUI.outputPath  + ", please check.",
 			    "Inane warning",
-			    JOptionPane.WARNING_MESSAGE);
+			    JOptionPane.INFORMATION_MESSAGE);
 
 	}
 

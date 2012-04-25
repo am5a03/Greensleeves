@@ -28,17 +28,17 @@ public class Main {
 		Essay[] es = new Essay[1];
 		es[0] = e;
 		
-//		ExamGenerator eg = new ExamGenerator(es);
-//		Thread t = new Thread(eg);
-//		t.start();
-//		
-//
-//		try {
-//			t.join();
-//		} catch (InterruptedException e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
+		ExamGenerator eg = new ExamGenerator(es);
+		Thread t = new Thread(eg);
+		t.start();
+		
+
+		try {
+			t.join();
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 //		
 //		for(int i = 0; i < eg.getQuestionList().size(); i++){
 //			Question q = eg.getQuestionList().get(i);
@@ -49,7 +49,8 @@ public class Main {
 		
 //		es[0] = e;
 //		
-		PDFFiller ep = new PDFFiller(es, "IELTS");
+		eg.getQuestionList();
+		PDFFiller ep = new PDFFiller(es, "IELTS", eg.getQuestionList());
 		ep.generate();
 //		TFNG tfng = new TFNG(e.getParagraph(1).getSentence(0));
 //		tfng.questionGen();
