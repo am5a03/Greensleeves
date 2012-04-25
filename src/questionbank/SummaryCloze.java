@@ -39,16 +39,38 @@ public class SummaryCloze extends Question {
 		//Integer targetPara = r.nextInt(essay.getNumOfParas());
 		Ranker ranker = new Ranker();
 		ArrayList<Sentence> potentialQs = ranker.getRankedSentences(essay.getParagraphs().get(targetPara));
-		Sentence targetSent = potentialQs.get(r.nextInt(potentialQs.size()));
+		Sentence targetSent = potentialQs.get(r.nextInt( (potentialQs.size()) ));
 		
+		String paraphrased = "";
 		try{
 			Paraphraser paraphraser = new Paraphraser(targetSent.toString());
 			paraphraser.setChanges(false, true, true, false, 0.4);
-			String paraphrased = paraphraser.paraphrase();
+			paraphrased = paraphraser.paraphrase();
+		}catch(Exception e){e.printStackTrace();}
 			
-			/*Tagparsing tp = new Tagparsing(paraphrased);
+		String result = "";
+		String answer = "";
+		try{
+			System.out.println(paraphrased);
+			ArrayList <String> facts = FactEvaluator.getAllFact(paraphrased);
+			Integer n = facts.size();
+			System.out.println(n.toString());
+			String targetFact = facts.get(r.nextInt(facts.size()));
+			answer = targetFact;
+			result = paraphrased;
+			
+			//result.replace(targetFact, "_______________");
+			//result.re
+			String inter[] = result.split(targetFact);
+			result = inter[0] + " ______________ " + inter[1];
+		}catch(Exception e){
+		
+		
+		
+			Tagparsing tp = new Tagparsing(paraphrased);
 			Integer nounsPos[] = tp.getNouns();
-			Integer targetBlankPos = r.nextInt(nounsPos.length);
+			Integer targetBlankPos = new Random().nextInt(nounsPos.length);
+			System.out.println(targetBlankPos.toString());
 		    TokenizerFactory<CoreLabel> tokenizerFactory = 
 		      PTBTokenizer.factory(new CoreLabelTokenFactory(), "");
 		    List<CoreLabel> rawWords2 = 
@@ -57,33 +79,24 @@ public class SummaryCloze extends Question {
 			for (int i = 0; i < inter.length; i++){
 				inter[i] = rawWords2.get(i).originalText();
 			}
-			String answer = inter[targetBlankPos];
+			answer = inter[targetBlankPos];
 			inter[targetBlankPos] = "________________";
-			String result = "";
+			result = "";
 			for (int i = 0; i < inter.length; i++)
 				if (i != inter.length - 1)
 					result += inter[i] + " ";
 				else
 					result += inter[i];
-			*/
 			
-			ArrayList <String> facts = FactEvaluator.getAllFact(paraphrased);
-			String targetFact = facts.get(r.nextInt(facts.size()));
-			String answer = targetFact;
-			String result = paraphrased;
 			
-			//result.replace(targetFact, "_______________");
-			//result.re
-			String inter[] = result.split(targetFact);
-			result = inter[0] + " ______________ " + inter[1];
+		}
 			
-		
 			
 			
 			questionAnsPair = new Pair<String, String>(result, answer);
 			System.out.println(result);
 			System.out.println(answer);
-		}catch(Exception e){e.printStackTrace();}
+		
 		
 	}
 	
