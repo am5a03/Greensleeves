@@ -30,7 +30,7 @@ import java.util.ArrayList;
  
 public class GUI extends JPanel  {
 	public static ArrayList<ArrayList<QuestionType>> qts = new ArrayList<ArrayList<QuestionType>>();
-	public static String outputPath = "";
+	public static String outputPath = "IELTS";
 	
     public GUI() {  	
     	
@@ -89,8 +89,8 @@ public class GUI extends JPanel  {
     protected JComponent makeFrontPage(){
     	JPanel wrapper = new JPanel();
     	JPanel panel = new JPanel();
-    	final JTextField fileDir = new JTextField("", 50);
-    	JLabel instruction = new JLabel("Enter the output directory:");
+    	final JTextField fileDir = new JTextField("IELTS", 40);
+    	JLabel instruction = new JLabel("Enter the output directory or file name:");
     	JButton saveBtn = new JButton("Save");
     	
     	panel.setLayout(new FlowLayout(FlowLayout.LEADING));
@@ -110,7 +110,7 @@ public class GUI extends JPanel  {
 				// TODO Auto-generated method stub
 				GUI.outputPath = fileDir.getText();
 				JOptionPane.showMessageDialog(null,
-					    "The output directory is set to " + fileDir.getText(),
+					    "The output directory or file name is set to " + fileDir.getText(),
 					    "Inane warning",
 					    JOptionPane.INFORMATION_MESSAGE);
 			}
