@@ -259,6 +259,10 @@ public class PDFFiller {
 				fillQuestionHeading(i/2, QuestionType.Matching, this.questinCount, this.questinCount + matching.getQuestionAnsPair().getRight().size() - 1);
 				fillMatching(matching.getQuestionAnsPair().getRight().size(), matching.getQuestionAnsPair(), this.questinCount);
 			}else if(q instanceof SevenTypes){
+				SevenTypes sts = (SevenTypes)q;
+				
+				fillQuestionHeading(i/2, QuestionType.SevenTypes, this.questinCount, this.questinCount + sts.getQuestionAnsPair().getLeft().size() - 1);
+				fillST(sts.getQuestionAnsPair().getLeft().size(), sts.getQuestionAnsPair(), this.questinCount);
 				
 			}else if(q instanceof SummaryClozes){
 				SummaryClozes scs = (SummaryClozes)q;
@@ -484,7 +488,39 @@ public class PDFFiller {
 				
 				for(int i = 0; i < instructions.length; i++) this.doc.add(instructions[i]);
 			}else if(qType == QuestionType.SevenTypes){
+				Paragraph instruction = new Paragraph();
+				Paragraph instruction2 = new Paragraph();
+				Paragraph instruction3 = new Paragraph();
 				
+				instruction.add(new Phrase("Look at the following items (Questions ",italicFont));
+				instruction.add(new Phrase(startQ+"-"+endQ,italicFont));
+				instruction.add(new Phrase(") and the list below."));
+				instruction.setSpacingAfter(10);
+				
+				instruction2.add(new Phrase("Match each item with correct answer in the list, ",italicFont));
+				instruction2.add(new Phrase((char)65+"-"+(char)(65+endQ-startQ),boldItalic));
+				instruction2.setSpacingAfter(10);
+				
+				instruction3.add(new Phrase("Write the correct letter, ",italicFont));
+				instruction3.add(new Phrase((char)65+"-"+(char)(65+endQ-startQ),boldItalic));
+				instruction3.add(new Phrase(", in boxes "+ startQ + "-" + endQ+" on your answer sheet.",italicFont));
+				instruction3.setSpacingAfter(10);
+				
+				this.doc.add(instruction);
+				this.doc.add(instruction2);
+				this.doc.add(instruction3);
+			}else if(qType == QuestionType.cloze){
+				Paragraph instruction = new Paragraph();
+				Paragraph instruction2 = new Paragraph();
+				
+				instruction.add(new Phrase("Complete the sentences below",italicFont));
+				instruction.setSpacingAfter(10);
+				instruction2.add(new Phrase("Choose ",italicFont));
+				instruction2.add(new Phrase("NO MORE THAN THREE WORDS ",boldItalic));
+				instruction2.add(new Phrase("from the passage for each answer ",italicFont));
+				instruction2.setSpacingAfter(10);
+				this.doc.add(instruction);
+				this.doc.add(instruction2);
 			}
 			
 		}catch(Exception e){
