@@ -308,10 +308,7 @@ public class GUI extends JPanel  {
 					System.out.println("");
 					
 					if(button.getText().equals("Generate")){
-						loadAndGen();
-						button.setEnabled(false);
-						button.setText("Generating...");
-						
+						loadAndGen(button);						
 					}
 				}
 				else 
@@ -386,20 +383,30 @@ public class GUI extends JPanel  {
         
     }
     
-    public void loadAndGen(){    	
+    public void loadAndGen(final JButton jbtn){    	
     	Essay[] essays = new Essay[3];
     	essays[0] = new Essay(Parameters.PASSAGE1);
     	essays[1] = new Essay(Parameters.PASSAGE2);
     	essays[2] = new Essay(Parameters.PASSAGE3);
     	
-    	GenThreadWrapper gw = new GenThreadWrapper(essays);
-    	Thread t = new Thread(gw);
-    	t.start();
+    	JFrame frame = new JFrame();
     	
-    	JOptionPane.showMessageDialog(null,
-			    "Genearating exam paper, please wait...",
-			    "Inane warning",
-			    JOptionPane.WARNING_MESSAGE);
+    	int choice = JOptionPane.showConfirmDialog(frame, "Start to generate?", "Confirm", JOptionPane.OK_CANCEL_OPTION);
+    	
+    	if(choice == JOptionPane.OK_OPTION){
+    		GenThreadWrapper gw = new GenThreadWrapper(essays);
+        	Thread t = new Thread(gw);
+        	t.start();
+        	
+        	JOptionPane.showMessageDialog(null,
+    			    "Genearating exam paper, please wait...",
+    			    "Inane warning",
+    			    JOptionPane.WARNING_MESSAGE);
+        	jbtn.setText("Generating...");
+        	jbtn.setEnabled(false);
+    	}
+    	
+    	
     	
 //    	ExamGenerator eg = new ExamGenerator(essays);
 //    	Thread t = new Thread(eg);
