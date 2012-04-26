@@ -38,10 +38,10 @@ public class GUI extends JPanel  {
          
         JTabbedPane tabbedPane = new JTabbedPane();
         
-        JComponent front = makeFrontPage();
-        JComponent panel1 = makeTextPanel1("Passage 1");
-        JComponent panel4 = makeTextPanel1("Passage 2");
-        JComponent panel5 = makeTextPanel1("Passage 3");
+        JComponent front = makeFrontPage(tabbedPane);
+        JComponent panel1 = makeTextPanel1("Passage 1", tabbedPane);
+        JComponent panel4 = makeTextPanel1("Passage 2", tabbedPane);
+        JComponent panel5 = makeTextPanel1("Passage 3", tabbedPane);
         tabbedPane.addTab("Main", null, front, "Main");
         tabbedPane.addTab("Passage 1",null, panel1,
                 "Passage 1");
@@ -86,7 +86,7 @@ public class GUI extends JPanel  {
         return panel;
     }
     
-    protected JComponent makeFrontPage(){
+    protected JComponent makeFrontPage(final JTabbedPane jtp){
     	JPanel wrapper = new JPanel();
     	JPanel panel = new JPanel();
     	final JTextField fileDir = new JTextField("IELTS", 40);
@@ -113,6 +113,7 @@ public class GUI extends JPanel  {
 					    "The output directory or file name is set to " + fileDir.getText(),
 					    "Inane warning",
 					    JOptionPane.INFORMATION_MESSAGE);
+				jtp.setSelectedIndex(1);
 			}
     		
     	});
@@ -120,7 +121,7 @@ public class GUI extends JPanel  {
     	return wrapper;
     }
     
-    protected JComponent makeTextPanel1(final String text) {
+    protected JComponent makeTextPanel1(final String text, final JTabbedPane jtp) {
         final JPanel panel = new JPanel(false);
         JPanel passage = new JPanel();
         JPanel qtype = new JPanel();
@@ -260,6 +261,13 @@ public class GUI extends JPanel  {
 									    JOptionPane.WARNING_MESSAGE);
 							}
 						}
+						JOptionPane.showMessageDialog(null,
+							    "Chosen question type: " + qts.get(0),
+							    "Info",
+							    JOptionPane.INFORMATION_MESSAGE);
+						jtp.setSelectedIndex(2);
+						
+						
 					}else if(text.equals("Passage 2")){
 						qts.add(1, qt);
 						if(qtype_fact.isSelected()){
@@ -271,6 +279,11 @@ public class GUI extends JPanel  {
 									    JOptionPane.WARNING_MESSAGE);
 							}
 						}
+						JOptionPane.showMessageDialog(null,
+							    "Chosen question type: " + qts.get(1),
+							    "Info",
+							    JOptionPane.INFORMATION_MESSAGE);
+						jtp.setSelectedIndex(3);
 					}else if(text.equals("Passage 3")){
 						qts.add(2, qt);
 						if(qtype_fact.isSelected()){
@@ -282,6 +295,11 @@ public class GUI extends JPanel  {
 									    JOptionPane.WARNING_MESSAGE);
 							}
 						}
+						
+						JOptionPane.showMessageDialog(null,
+							    "Chosen question type: " + qts.get(2),
+							    "Info",
+							    JOptionPane.INFORMATION_MESSAGE);
 					}
 					
 					for(int i = 0; i < qts.size(); i++){
