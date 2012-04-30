@@ -1,5 +1,7 @@
 package GUI;
 
+import java.util.Timer;
+
 import javax.swing.JOptionPane;
 
 import itext.PDFFiller;
@@ -17,9 +19,15 @@ public class GenThreadWrapper implements Runnable {
 	public void run() {
 		// TODO Auto-generated method stub
 		ExamGenerator eg = new ExamGenerator(essays);
+		GUITimer guiTimer = new GUITimer();
+		Timer timer = new Timer();
+		
     	Thread t = new Thread(eg);
     	t.start();
+    	guiTimer.setStartTime(System.currentTimeMillis());
+    	timer.schedule(guiTimer, 0, 1000);
     	
+    	GUI.isGenerating = true;
     	try {
     		t.join();
 		} catch (InterruptedException e) {
@@ -34,6 +42,10 @@ public class GenThreadWrapper implements Runnable {
 			    "Exam paper is ready at " + GUI.outputPath  + ", please check.",
 			    "Inane warning",
 			    JOptionPane.INFORMATION_MESSAGE);
+    	GUI.generatingBtn.setText("Generate");
+    	GUI.generatingBtn.setEnabled(true);
+    	GUI.isGenerating = false;
+    	guiTimer.cancel();
 
 	}
 

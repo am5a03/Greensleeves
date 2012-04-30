@@ -31,11 +31,15 @@ import java.util.ArrayList;
 public class GUI extends JPanel  {
 	public static ArrayList<ArrayList<QuestionType>> qts = new ArrayList<ArrayList<QuestionType>>();
 	public static String outputPath = "IELTS";
+	public static JButton generatingBtn = null;
+	public static boolean isGenerating = false;
+	
+	public static JLabel timerText = new JLabel("Time Elapsed: 0:00:00");
 	
     public GUI() {  	
     	
         super(new GridLayout(1, 1));
-         
+        
         JTabbedPane tabbedPane = new JTabbedPane();
         
         JComponent front = makeFrontPage(tabbedPane);
@@ -53,8 +57,8 @@ public class GUI extends JPanel  {
                 "Passage 3");
         tabbedPane.setMnemonicAt(0, KeyEvent.VK_3);
         JComponent panel2 = makeTextPanel2("Upload Text File");
-        tabbedPane.addTab("Upload", null, panel2,
-                "Upload Text File");
+//        tabbedPane.addTab("Upload", null, panel2,
+//                "Upload Text File");
         tabbedPane.setMnemonicAt(1, KeyEvent.VK_4);
          
         JComponent panel3 = makeTextPanel3("HELLO WORLD");
@@ -74,8 +78,7 @@ public class GUI extends JPanel  {
         JLabel filler2 = new JLabel();
         filler.setHorizontalAlignment(JLabel.LEFT);
         filler2.setHorizontalAlignment(JLabel.LEFT);
-        filler.setText("1. Heading is on the first line.");
-        filler2.setText("2. Each paragraph is speparated by a enter");
+        filler.setText("<html><ol><li>The first line of the text is the passage heading.</li><li>Each paragraph is speparated by a enter</li></ol></html>");
         panel.setLayout(new GridLayout(2, 1));
         panel.add(filler);
         panel.add(filler2);
@@ -133,10 +136,10 @@ public class GUI extends JPanel  {
         final JCheckBox qtype_cloze = new JCheckBox();
         final JCheckBox qtype_matching = new JCheckBox();
         qtype_info.setText("Information identification");
-        qtype_mcq.setText("Multiple Choice Questions");
-        qtype_tf.setText("True/False Not Given");
         qtype_heading.setText("Paragraph Heading");
         qtype_fact.setText("Factual Question");
+        qtype_mcq.setText("Multiple Choice Questions");
+        qtype_tf.setText("True/False Not Given");        
         qtype_cloze.setText("Summary Cloze");
         qtype_matching.setText("Matching");
         //panel.setLayout(new GridLayout(0, 2));
@@ -153,7 +156,7 @@ public class GUI extends JPanel  {
         	
         
         
-        JTextArea textarea1 = new JTextArea("");
+        final JTextArea textarea1 = new JTextArea("");
         
         textarea1.setLineWrap(true);
         JScrollPane scrollPane1 = new JScrollPane(textarea1);
@@ -164,9 +167,9 @@ public class GUI extends JPanel  {
         qtype.setLayout(new GridLayout(7, 1));
         qtype.add(qtype_info);
         qtype.add(qtype_heading);
+        qtype.add(qtype_fact);
         qtype.add(qtype_mcq);
         qtype.add(qtype_tf);
-        qtype.add(qtype_fact);
         qtype.add(qtype_cloze);
         qtype.add(qtype_matching);
         panel.setLayout (new BorderLayout());
@@ -179,6 +182,7 @@ public class GUI extends JPanel  {
         panel.add(btnPanel, BorderLayout.SOUTH);
         btnPanel.add(button, BorderLayout.WEST);
         btnPanel.add(resetBtn, BorderLayout.EAST);
+        btnPanel.add(timerText, BorderLayout.EAST);
         //panel.add(button,BorderLayout.SOUTH);
         
         final JTextArea p1 = textarea1;
@@ -188,10 +192,11 @@ public class GUI extends JPanel  {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				if(button.getText().equals("Generating...")){
+				if(!GUI.isGenerating && filler.getText().equals("Passage 3")){
 					button.setEnabled(true);
 					button.setText("Generate");
 				}
+				textarea1.setText("");
 			}
         	
         });
@@ -212,6 +217,10 @@ public class GUI extends JPanel  {
 					count ++;
 					qt.add(QuestionType.ParagraphHeading);
 				}
+				if (qtype_fact.isSelected()){
+					count ++;
+					qt.add(QuestionType.SevenTypes);
+				}
 				if (qtype_mcq.isSelected()){
 					count ++;
 					qt.add(QuestionType.MCQ);
@@ -219,10 +228,6 @@ public class GUI extends JPanel  {
 				if (qtype_tf.isSelected()){
 					count ++;
 					qt.add(QuestionType.TFNG);
-				}
-				if (qtype_fact.isSelected()){
-					count ++;
-					qt.add(QuestionType.SevenTypes);
 				}
 				if (qtype_cloze.isSelected()){
 					count ++;
@@ -398,11 +403,8 @@ public class GUI extends JPanel  {
         	Thread t = new Thread(gw);
         	t.start();
         	
-        	JOptionPane.showMessageDialog(null,
-    			    "Genearating exam paper, please wait...",
-    			    "Inane warning",
-    			    JOptionPane.WARNING_MESSAGE);
         	jbtn.setText("Generating...");
+        	generatingBtn = jbtn;
         	jbtn.setEnabled(false);
     	}
     	
