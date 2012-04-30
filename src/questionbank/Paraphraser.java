@@ -97,6 +97,7 @@ public class Paraphraser {
 			}
 		}
 		
+	
 		String result = "";
 		for (int i = 0; i < inter.length; i++)
 			if (i != inter.length - 1){
